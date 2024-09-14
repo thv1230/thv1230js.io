@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸运数字</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f6f3f6, #e2e2e2);
+            color: #333;
+        }
+        header {
+            width: 100%;
+            background: #99b9de;
+            color: white;
+            padding: 10px;
+            margin-top: 0;
+            text-align: center;
+            font-size: 60px;
+            border-bottom: 5px solid #cfe7ff;
+        }
+        main {
+            width: 80%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 20% ;
+            text-align: center;
+            font-size: 50px;
+        }
+        footer {
+            width: 100%;
+            background: #cfe7ff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 40px;
+            position: absolute;
+            bottom: 0;
+            border-top: 5px solid #cfe7ff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        欢迎来到我的网页
+    </header>
+    <main>
+        <p id="luckyNumber">Generating your lucky number...</p>
+    </main>
+    <footer>
+        <p id="executionTime">Execution time will be displayed here.</p>
+    </footer>
+    <script>
+        let startTime = new Date();
+        let luckyNumber = Math.floor(Math.random() * 100) + 1;
+        let mainElement = document.getElementById('luckyNumber');
+        mainElement.textContent = '你的幸运数字是: ' + luckyNumber;
+        console.log('Lucky Number:', luckyNumber);
+
+        let renderTime = new Date() - startTime;
+        console.log('渲染网页时间: ' + renderTime + ' ms!');
+        let cpuStartTime = new Date();
+        for (let i = 1; i <= 1e8; i++) {}
+        let cpuTime = new Date() - cpuStartTime;
+        console.log('cpu计数到1亿要: ' + cpuTime + ' ms!');
+        let footerElement = document.getElementById('executionTime');
+        footerElement.textContent = "网页执行时间: " + (new Date() - startTime) + ' ms';
+    </script>
+</body>
+</html>
