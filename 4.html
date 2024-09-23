@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词随机显示器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px;
+            font-size: 40px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 33.3%);
+            gap: 15px;
+            width: 100%;
+        }
+        .card {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 10px;
+            font-size: 30px;
+        }
+        input {
+            padding: 15px;
+            margin: 10px;
+            width: 80%;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>欢迎来到单词随机显示器</h1>
+    <button id="loadWords">读入单词</button>
+    <button id="showWord">显示随机单词</button>
+
+    <div class="grid" id="wordGrid"></div>
+
+    <script>
+        let wordsArray = [];
+        const loadWordsButton = document.getElementById('loadWords');
+        const showWordButton = document.getElementById('showWord');
+        const wordGrid = document.getElementById('wordGrid');
+
+        loadWordsButton.onclick = function() {
+            fetch('cet6.txt')
+                .then(res => res.text())
+                .then(txt => {
+                    wordsArray = txt.split('\n');
+                    wordGrid.innerHTML = ''; // 清空之前的单词
+                })
+                .catch(err => alert('读入失败，请检查文件路径'));
+        };
+
+        showWordButton.onclick = function() {
+            if (wordsArray.length === 0) {
+                alert('请先读入单词！');
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * wordsArray.length);
+            const wordDetails = wordsArray[randomIndex].split('\t');
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `<h2>${wordDetails[0]}</h2><p>${wordDetails[1]}</p><p>${wordDetails[2]}</p>`;
+            wordGrid.appendChild(card);
+        };
+    </script>
+</body>
+</html>
