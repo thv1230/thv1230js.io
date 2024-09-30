@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单网页示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            font-size: 35px;
+            border: 1px solid green;
+            height: 40%;
+        }
+        .header {
+            background-color: #4CAF50; 
+            color: white;
+            padding: 20px; 
+            font-size: 40px;
+            text-align: center; 
+            margin-bottom: 20px; 
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 30px;
+            cursor: pointer;
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            transition: background-color 0.3s; 
+            margin-bottom: 20px;
+        }
+        .button:hover {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    欢迎来到我的网页
+</div>
+
+<p>这是一个网页。</p>
+<button class="button" id="myButton">点击我</button>
+
+<script>
+
+    const button = document.getElementById("myButton");
+    button.onclick = function() {
+        alert("你点击了按钮!"); 
+    }
+</script>
+
+</body>
+</html>
