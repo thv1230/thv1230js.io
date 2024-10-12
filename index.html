@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +12,12 @@
             margin-top: 50px;
             font-size: 50px;
         }
+
         #wordDisplay {
             font: size 50px;
             margin: 20px 0;
         }
+
         button {
             padding: 10px 20px;
             font-size: 35px;
@@ -23,6 +26,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <h1>随机单词生成器</h1>
@@ -32,42 +36,91 @@
     <button id="endBtn" style="display:none;">结束</button>
 
     <script>
-        const words = [
-            "apple", "banana", "cherry", "date", "elderberry", 
-            "fig", "grape", "honeydew", "kiwi", "lemon",
-            "mango", "nectarine", "orange", "papaya", "quince",
-            "raspberry", "strawberry", "tangerine", "watermelon"
-        ];
+        // Model 组件
+        class WordModel {
+            constructor() {
+                this.words = [
+                    "apple", "banana", "cherry", "date", "elderberry",
+                    "fig", "grape", "honeydew", "kiwi", "lemon",
+                    "mango", "nectarine", "orange", "papaya", "quince",
+                    "raspberry", "strawberry", "tangerine", "watermelon"
+                ];
+                this.currentWord = "";
+            }
 
-        let currentWord = "";
-
-        document.getElementById("generateBtn").addEventListener("click", function() {
-            currentWord = getRandomWord();
-            document.getElementById("wordDisplay").innerText = currentWord;
-            toggleButtons();
-        });
-
-        document.getElementById("continueBtn").addEventListener("click", function() {
-            currentWord = getRandomWord(); 
-            document.getElementById("wordDisplay").innerText = currentWord;  // 更新显示
-        });
-
-        document.getElementById("endBtn").addEventListener("click", function() {
-            document.getElementById("wordDisplay").innerText = "结束了！";
-            toggleButtons(true);
-        });
-
-        function getRandomWord() {
-            const randomIndex = Math.floor(Math.random() * words.length);
-            return words[randomIndex];
+            getRandomWord() {
+                const randomIndex = Math.floor(Math.random() * this.words.length);
+                this.currentWord = this.words[randomIndex];
+                return this.currentWord;
+            }
         }
 
-        function toggleButtons(end = false) {
-            document.getElementById("generateBtn").style.display = end ? "none" : "inline-block";
-            document.getElementById("continueBtn").style.display = end ? "none" : "inline-block";
-            document.getElementById("endBtn").style.display = end ? "none" : "inline-block";
+        // UI 组件
+        class WordUI {
+            constructor() {
+                this.wordDisplay = document.getElementById("wordDisplay");
+                this.generateBtn = document.getElementById("generateBtn");
+                this.continueBtn = document.getElementById("continueBtn");
+                this.endBtn = document.getElementById("endBtn");
+            }
+
+            displayWord(word) {
+                this.wordDisplay.innerText = word;
+            }
+
+            toggleButtons(isEnd = false) {
+                this.generateBtn.style.display = isEnd ? "none" : "inline-block";
+                this.continueBtn.style.display = isEnd ? "none" : "inline-block";
+                this.endBtn.style.display = isEnd ? "none" : "inline-block";
+            }
+
+            bindGenerate(handler) {
+                this.generateBtn.addEventListener("click", handler);
+            }
+
+            bindContinue(handler) {
+                this.continueBtn.addEventListener("click", handler);
+            }
+
+            bindEnd(handler) {
+                this.endBtn.addEventListener("click", handler);
+            }
         }
+
+        // 控制器组件
+        class WordController {
+            constructor(model, ui) {
+                this.model = model;
+                this.ui = ui;
+
+                this.ui.bindGenerate(this.generateWord.bind(this));
+                this.ui.bindContinue(this.continueWord.bind(this));
+                this.ui.bindEnd(this.endGame.bind(this));
+            }
+
+            generateWord() {
+                const word = this.model.getRandomWord();
+                this.ui.displayWord(word);
+                this.ui.toggleButtons();
+            }
+
+            continueWord() {
+                const word = this.model.getRandomWord();
+                this.ui.displayWord(word);
+            }
+
+            endGame() {
+                this.ui.displayWord("结束了！");
+                this.ui.toggleButtons(true);
+            }
+        }
+
+        // 初始化应用
+        const wordModel = new WordModel();
+        const wordUI = new WordUI();
+        const wordController = new WordController(wordModel, wordUI);
     </script>
 
 </body>
+
 </html>
