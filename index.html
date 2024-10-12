@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机单词生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            font-size: 50px;
+        }
+        #wordDisplay {
+            font: size 50px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 35px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>随机单词生成器</h1>
+    <div id="wordDisplay">点击下方按钮生成单词</div>
+    <button id="generateBtn">生成随机单词</button>
+    <button id="continueBtn" style="display:none;">继续生成单词</button>
+    <button id="endBtn" style="display:none;">结束</button>
+
+    <script>
+        const words = [
+            "apple", "banana", "cherry", "date", "elderberry", 
+            "fig", "grape", "honeydew", "kiwi", "lemon",
+            "mango", "nectarine", "orange", "papaya", "quince",
+            "raspberry", "strawberry", "tangerine", "watermelon"
+        ];
+
+        let currentWord = "";
+
+        document.getElementById("generateBtn").addEventListener("click", function() {
+            currentWord = getRandomWord();
+            document.getElementById("wordDisplay").innerText = currentWord;
+            toggleButtons();
+        });
+
+        document.getElementById("continueBtn").addEventListener("click", function() {
+            currentWord = getRandomWord(); 
+            document.getElementById("wordDisplay").innerText = currentWord;  // 更新显示
+        });
+
+        document.getElementById("endBtn").addEventListener("click", function() {
+            document.getElementById("wordDisplay").innerText = "结束了！";
+            toggleButtons(true);
+        });
+
+        function getRandomWord() {
+            const randomIndex = Math.floor(Math.random() * words.length);
+            return words[randomIndex];
+        }
+
+        function toggleButtons(end = false) {
+            document.getElementById("generateBtn").style.display = end ? "none" : "inline-block";
+            document.getElementById("continueBtn").style.display = end ? "none" : "inline-block";
+            document.getElementById("endBtn").style.display = end ? "none" : "inline-block";
+        }
+    </script>
+
+</body>
+</html>
